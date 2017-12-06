@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: samplegohttp-deployment
+spec:
+  selector:
+    matchLabels:
+      app: samplegohttp
+  replicas: 5 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod-samplegohttp.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: samplegohttp
+    spec:
+      containers:
+      - name: samplegohttp
+        image: kannanthiru/samplegohttp:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: samplegohttp-ingress
+spec:
+  rules:
+  - host: samplegohttp.vagrant.local.com
+    http:
+      paths:
+      - backend:
+          serviceName: samplegohttp-service
+          servicePort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: samplegohttp-service
+spec:
+  selector:
+    app: samplegohttp
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+    nodePort: 30061

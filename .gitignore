@@ -1,0 +1,4 @@
+.vagrant/*/**
+steps
+.idea/*/**
+*.iml
