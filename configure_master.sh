@@ -9,7 +9,7 @@ Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false"
 EOF
 
 sudo systemctl daemon-reload
-sudo kubeadm init --skip-preflight-checks --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=${ADDRESS} --token=a7da6c.4566sfsg56rb3456
+sudo kubeadm init --ignore-preflight-errors=all --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=${ADDRESS} --token=a7da6c.4566sfsg56rb3456
 sleep 15
 sudo mkdir -p /root/.kube/
 sudo cp /etc/kubernetes/admin.conf /root/.kube/config
