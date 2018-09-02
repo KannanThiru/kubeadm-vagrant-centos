@@ -3,11 +3,6 @@
 ADDRESS="$(ip -4 addr show eth1 | grep "inet" | head -1 |awk '{print $2}' | cut -d/ -f1)"
 sudo sed -e "s/^.*master.*/${ADDRESS} master master.local/" -i /etc/hosts
 
-cat > /etc/systemd/system/kubelet.service.d/01-kubeadm.conf <<EOF
-[Service]
-Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false"
-EOF
-
 sudo systemctl daemon-reload
 sudo kubeadm init --ignore-preflight-errors=all --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=${ADDRESS} --token=a7da6c.4566sfsg56rb3456
 sleep 15

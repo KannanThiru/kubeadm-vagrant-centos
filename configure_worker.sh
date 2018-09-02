@@ -1,10 +1,5 @@
 #!/bin/bash
 
-cat > /etc/systemd/system/kubelet.service.d/01-kubeadm.conf <<EOF
-[Service]
-Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false"
-EOF
-
 ADDRESS="$(ip -4 addr show eth1 | grep "inet" | head -1 |awk '{print $2}' | cut -d/ -f1)"
 HOSTNAME=`hostname`
 sudo sed -e "s/^.*${HOSTNAME}.*/${ADDRESS} ${HOSTNAME} ${HOSTNAME}.local/" -i /etc/hosts

@@ -5,7 +5,9 @@ Vagrant.configure("2") do |config|
     master.vm.hostname = 'master'
     master.vm.box_url = "centos/7"
     master.vm.network :private_network, ip: "192.168.56.101"
+    master.vm.provision "shell", inline: "swapoff -a"
     master.vm.synced_folder ".", "/vagrant"
+
     master.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       v.memory = 2048
@@ -23,6 +25,7 @@ Vagrant.configure("2") do |config|
     worker1.vm.hostname = 'worker1'
     worker1.vm.box_url = "centos/7"
     worker1.vm.network :private_network, ip: "192.168.56.102"
+    worker1.vm.provision "shell", inline: "swapoff -a"
 
     worker1.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
@@ -40,6 +43,7 @@ Vagrant.configure("2") do |config|
     worker2.vm.hostname = 'worker2'
     worker2.vm.box_url = "centos/7"
     worker2.vm.network :private_network, ip: "192.168.56.103"
+    worker1.vm.provision "shell", inline: "swapoff -a"
 
     worker2.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
