@@ -5,6 +5,7 @@ Vagrant.configure("2") do |config|
     master.vm.hostname = 'master'
     master.vm.box_url = "centos/7"
     master.vm.network :private_network, ip: "192.168.56.101"
+    master.vm.network "forwarded_port", guest: 6443, host: 6443
     master.vm.provision "shell", inline: "swapoff -a"
     master.vm.synced_folder ".", "/vagrant"
 
